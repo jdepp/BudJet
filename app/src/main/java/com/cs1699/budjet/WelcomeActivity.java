@@ -21,15 +21,15 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void onLoginClicked(View view) {
-        Toast.makeText(mContext, "Login clicked", Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, "Login clicked", Toast.LENGTH_SHORT).show();
     }
 
     public void onRegisterClicked(View view) {
-        Toast.makeText(mContext, "Register clicked", Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, "Register clicked", Toast.LENGTH_SHORT).show();
     }
 
     public void onForgotPasswordClicked(View view) {
-        Toast.makeText(mContext, "Forgot password clicked", Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, "Forgot password clicked", Toast.LENGTH_SHORT).show();
     }
 
 }

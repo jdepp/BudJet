@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textSize="30dp"
-            android:paddingTop="40dp"
+            android:paddingTop="60dp"
             android:text="Welcome to BudJet!"/>
 
         <LinearLayout
