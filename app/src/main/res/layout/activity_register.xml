@@ -21,54 +21,54 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/email_in"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Enter Email"/>
+                android:hint="Enter Email" />
 
             <EditText
                 android:id="@+id/password_in"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Enter Password"/>
+                android:hint="Enter Password" />
 
             <EditText
                 android:id="@+id/confirm_password"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Confirm Password"/>
+                android:hint="Confirm Password" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:textSize="25dp"
                 android:paddingTop="20dp"
                 android:paddingBottom="10dp"
-                android:text="Enter Security Questions"/>
+                android:text="Enter Security Questions"
+                android:textSize="25dp" />
+
             <Spinner
                 android:id="@+id/secQSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:entries="@array/security_questions"
                 android:gravity="center_horizontal"
                 android:paddingLeft="60dp"
-                android:entries="@array/security_questions"
-                android:prompt="@string/secQ_prompt" >
-            </Spinner>
+                android:prompt="@string/secQ_prompt"></Spinner>
 
             <EditText
                 android:id="@+id/sec_answer"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Enter Answer"/>
+                android:hint="Enter Answer" />
 
             <Button
                 android:id="@+id/create_account_button"
