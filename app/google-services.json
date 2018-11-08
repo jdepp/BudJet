@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "753686536552",
+    "firebase_url": "https://budjet-cf48a.firebaseio.com",
+    "project_id": "budjet-cf48a",
+    "storage_bucket": "budjet-cf48a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753686536552:android:3e4a385cc039490b",
+        "android_client_info": {
+          "package_name": "com.cs1699.budjet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753686536552-ipiqbe9sdrhqf5a3s6dl8amk8v0amll7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cs1699.budjet",
+            "certificate_hash": "e4f5e51c6d5a537b3eb0071573fda077b339f5c7"
+          }
+        },
+        {
+          "client_id": "753686536552-9i2uqhglln9nt65ipmr5kmas9acnq6cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwYz4vjK855af6UrZ51Es7Y27oo-KmCxo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753686536552-9i2uqhglln9nt65ipmr5kmas9acnq6cn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
