@@ -10,12 +10,12 @@ public class User {
     private int id;
     private String name;
     private String email;
-    private String[] securityQuestions;
-    private String[] securityAnswers;
-    private ArrayList<Expense> expenses = new ArrayList<Expense>();
-    private ArrayList<Income> incomes = new ArrayList<Income>();
-    private ArrayList<Category> categories = new ArrayList<Category>();
-    private ArrayList<Budget> budgets = new ArrayList<Budget>();
+    private String securityQuestions;
+    private String securityAnswers;
+    private ArrayList<Expense> expenses = new ArrayList<>();
+    private ArrayList<Income> incomes = new ArrayList<>();
+    private ArrayList<Category> categories = new ArrayList<>();
+    private ArrayList<Budget> budgets = new ArrayList<>();
 
     public User() {
 
@@ -37,11 +37,11 @@ public class User {
     public String getName() { return this.name; }
     public void setName(String name) { this.name = name; }
 
-    public String[] getSecQ() { return this.securityQuestions; }
-    public void setSecQ(String[] secQ) { this.securityQuestions = secQ; }
+    public String getSecQ() { return this.securityQuestions; }
+    public void setSecQ(String secQ) { this.securityQuestions = secQ; }
 
-    public String[] getSecA() { return this.securityAnswers; }
-    public void setSecA(String[] secA) { this.securityAnswers = secA; }
+    public String getSecA() { return this.securityAnswers; }
+    public void setSecA(String secA) { this.securityAnswers = secA; }
 
     public ArrayList<Income> getIncomes() { return this.incomes; }
     public void addIncome(Income income) { this.incomes.add(income); }

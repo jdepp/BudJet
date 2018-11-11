@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cs1699.budjet.models.User;
@@ -27,7 +28,8 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
 
     private final Context mContext = this;
-    private EditText inputEmail, inputPassword, inputName;
+    private EditText inputEmail, inputPassword, confirmPassword, inputName, securityA;
+    private Spinner securityQ;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
@@ -41,7 +43,10 @@ public class RegisterActivity extends AppCompatActivity {
         btnSignUp = (Button) findViewById(R.id.register_button);
         inputEmail = (EditText) findViewById(R.id.register_email_edittext);
         inputPassword = (EditText) findViewById(R.id.register_password_edittext);
+        confirmPassword = (EditText) findViewById(R.id.confirm_password_edittext);
         inputName = (EditText) findViewById(R.id.register_name_edittext);
+        securityQ = (Spinner) findViewById(R.id.secQSpinner);
+        securityA = (EditText) findViewById(R.id.sec_answer);
         auth = FirebaseAuth.getInstance();
 
         // This block of code is triggered when the "Register" button is clicked
@@ -52,10 +57,18 @@ public class RegisterActivity extends AppCompatActivity {
                 final String email = inputEmail.getText().toString().trim();
                 final String name = inputName.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
+                String cPassword = confirmPassword.getText().toString().trim();
+                final String secQ = securityQ.toString().trim();
+                final String secA = securityA.getText().toString().trim();
 
                 Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
                 Matcher matcher = pattern.matcher(email);
 
+                if (!password.equals(cPassword))
+                {
+                    Toast.makeText(mContext, "Your passwords do not match", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(mContext, "Enter email address!", Toast.LENGTH_SHORT).show();
                     return;
@@ -103,6 +116,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                                 else {
                                     User newUser = new User(name, email);  // create the new User and store in the database
+                                    newUser.setSecQ(secQ);
+                                    newUser.setSecA(secA);
                                     DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");  // gets the reference to the "users" portion of the database
                                     usersRef.push().setValue(newUser);  // generates unique ID for the user and saves to database
                                     startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
