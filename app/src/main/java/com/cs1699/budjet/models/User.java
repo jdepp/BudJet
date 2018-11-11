@@ -2,6 +2,8 @@ package com.cs1699.budjet.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
+
 @IgnoreExtraProperties
 public class User {
 
@@ -44,7 +46,7 @@ public class User {
     public ArrayList<Income> getIncomes() { return this.incomes; }
     public void addIncome(Income income) { this.incomes.add(income); }
 
-    public ArrayList<Income> getExpenses() { return this.expenses; }
+    public ArrayList<Expense> getExpenses() { return this.expenses; }
     public void addExpense(Expense expense) { this.expenses.add(expense); }
 
     public ArrayList<Category> getCategories() { return this.categories; }

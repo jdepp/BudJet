@@ -2,6 +2,7 @@ package com.cs1699.budjet.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+@IgnoreExtraProperties
 public class Budget {
     private int id;
     private Category category;
