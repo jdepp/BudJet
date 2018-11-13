@@ -53,7 +53,7 @@ public class User {
     public void addCategory(Category category) { this.categories.add(category); }
 
     public ArrayList<Budget> getBudgets() { return this.budgets; }
-    public void setBudget(Budget budget, int index) { this.budgets.add(index, budget) }
+    public void setBudget(Budget budget, int index) { this.budgets.add(index, budget); }
 
     public String getEmail() { return this.email; }
     public void setEmail(String email) { this.email = email; }

@@ -16,12 +16,14 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="secQ_prompt">Choose a Security Question</string>
     <string-array name="security_questions">
-        <item>What was your first pet's name?</item>
-        <item>What is your mother's maiden name?</item>
+        <item>What was your first pet\'s name?</item>
+        <item>What is your mother\'s maiden name?</item>
         <item>What is the name of the street you grew up on?</item>
         <item>What is your favorite book?</item>
         <item>What is your favorite movie?</item>
         <item>What was the first country you ever visited?</item>
     </string-array>
+    <string name="income">"Income"</string>
+    <string name="expense">"Expense"</string>
 
 </resources>

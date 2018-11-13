@@ -93,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (password.length() < 6) {
                     Toast.makeText(mContext, "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
                     inputPassword.getText().clear();
+                    confirmPassword.getText().clear();
                     return;
                 }
 
