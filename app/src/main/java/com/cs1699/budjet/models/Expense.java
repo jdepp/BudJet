@@ -1,24 +1,26 @@
 package com.cs1699.budjet.models;
 
+import java.util.Date;
+
 public class Expense {
 
     private String EID;
     private double Value;
     private String Description;
     private Category category;
-    private String Date;
+    private Date date;
     private boolean type;
 
     public Expense() {
 
     }
 
-    public Expense(Category c, boolean rec, double val, String des, String date) {
+    public Expense(Category c, boolean rec, double val, String des, Date date) {
         this.category = c;
         this.type = rec;
         this.Value = val;
         this.Description = des;
-        this.Date = date;
+        this.date = date;
     }
 
     public String getID() { return this.EID; }
@@ -33,8 +35,8 @@ public class Expense {
     public Category getCategory() { return this.category; }
     public void setCategory(Category categ) { this.category = categ; }
     
-    public String getDate() { return this.Date; }
-    public void setDate(String d) { this.Date = d; }
+    public Date getDate() { return this.date; }
+    public void setDate(Date d) { this.date = d; }
     
     public boolean isRecurring() { return this.type; }
     public void setType(boolean t) { this.type = t; }
