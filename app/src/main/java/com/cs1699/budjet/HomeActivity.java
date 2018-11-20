@@ -28,7 +28,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private final Context mContext = this;
-    private static String currentUserEmail;
+    private static String currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,9 @@ public class HomeActivity extends AppCompatActivity {
 
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        currentUserEmail = mFirebaseUser.getEmail();
+        final String currentUserEmail = mFirebaseUser.getEmail();
+        String[] emailTokenized = currentUserEmail.split("@");
+        currentUser = emailTokenized[0];
 
         final TextView loggedInUserTextview = (TextView)findViewById(R.id.home_loggedin_user_textview);
 
@@ -69,8 +71,8 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(myIntent);
     }
 
-    public static String getCurrentUserEmail() {
-        return HomeActivity.currentUserEmail;
+    public static String getCurrentUser() {
+        return HomeActivity.currentUser;
     }
 }
 

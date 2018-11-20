@@ -8,14 +8,14 @@ public class Expense {
     private double Value;
     private String Description;
     private Category category;
-    private Date date;
+    private String date;
     private boolean type;
 
     public Expense() {
 
     }
 
-    public Expense(Category c, boolean rec, double val, String des, Date date) {
+    public Expense(Category c, boolean rec, double val, String des, String date) {
         this.category = c;
         this.type = rec;
         this.Value = val;
@@ -35,8 +35,8 @@ public class Expense {
     public Category getCategory() { return this.category; }
     public void setCategory(Category categ) { this.category = categ; }
     
-    public Date getDate() { return this.date; }
-    public void setDate(Date d) { this.date = d; }
+    public String getDate() { return this.date; }
+    public void setDate(String d) { this.date = d; }
     
     public boolean isRecurring() { return this.type; }
     public void setType(boolean t) { this.type = t; }

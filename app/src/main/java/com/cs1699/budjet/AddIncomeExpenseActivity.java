@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -94,29 +95,13 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
 
                 double dValue = Double.parseDouble(value);
                 if(income_expense_choice.getText().equals("Income")){
-//                    final Income i = new Income(null, recurr_bool, dValue, descrip, new Date());
-//                    usersRef.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            List<User> courses = new ArrayList<>();
-//                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-//                                User user = child.getValue(User.class);
-//                                if(user.getEmail().equals(HomeActivity.getCurrentUserEmail())) {
-//                                    ArrayList<Income> incomes = user.getIncomes();
-//                                    incomes.add(i);
-//                                    usersRef.push().setValue(user);
-//                                }
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+                    Income i = new Income(null, recurr_bool, dValue, descrip, timeStamp);
+                    usersRef.child(HomeActivity.getCurrentUser()).child("incomes").setValue(i);
                 }
                 else {
-                    Expense e = new Expense(null, recurr_bool, dValue, descrip, new Date());
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+                    Expense e = new Expense(null, recurr_bool, dValue, descrip, timeStamp);
 
                 }
             }
