@@ -24,12 +24,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,6 +53,9 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_income_expense);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference usersRef = database.getReference("users");
 
         btnSubmit = (Button) findViewById(R.id.submit_button);
         income_or_expense = (RadioGroup) findViewById(R.id.radioSex);
@@ -86,10 +94,30 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
 
                 double dValue = Double.parseDouble(value);
                 if(income_expense_choice.getText().equals("Income")){
-                    Income i = new Income(null, recurr_bool, dValue, descrip, new Date());
+//                    final Income i = new Income(null, recurr_bool, dValue, descrip, new Date());
+//                    usersRef.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            List<User> courses = new ArrayList<>();
+//                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                                User user = child.getValue(User.class);
+//                                if(user.getEmail().equals(HomeActivity.getCurrentUserEmail())) {
+//                                    ArrayList<Income> incomes = user.getIncomes();
+//                                    incomes.add(i);
+//                                    usersRef.push().setValue(user);
+//                                }
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
                 }
                 else {
                     Expense e = new Expense(null, recurr_bool, dValue, descrip, new Date());
+
                 }
             }
         });

@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     newUser.setSecQ(secQ);
                                     newUser.setSecA(secA);
                                     DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");  // gets the reference to the "users" portion of the database
-                                    usersRef.push().setValue(newUser);  // generates unique ID for the user and saves to database
+                                    usersRef.child(email).setValue(newUser);  // generates unique ID for the user and saves to database
                                     startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                                     finish();
                                 }

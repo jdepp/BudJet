@@ -28,6 +28,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private final Context mContext = this;
+    private static String currentUserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
 
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        final String currentUserEmail = mFirebaseUser.getEmail();
+        currentUserEmail = mFirebaseUser.getEmail();
 
         final TextView loggedInUserTextview = (TextView)findViewById(R.id.home_loggedin_user_textview);
 
@@ -66,6 +67,10 @@ public class HomeActivity extends AppCompatActivity {
             //Toast.makeText(mContext, "Hello", Toast.LENGTH_LONG).show();
             Intent myIntent = new Intent(this, AddIncomeExpenseActivity.class);
             startActivity(myIntent);
-        }
+    }
+
+    public static String getCurrentUserEmail() {
+        return HomeActivity.currentUserEmail;
+    }
 }
 
