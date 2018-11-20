@@ -58,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String name = inputName.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 String cPassword = confirmPassword.getText().toString().trim();
-                final String secQ = securityQ.toString().trim();
+                final String secQ = securityQ.getSelectedItem().toString().trim();
                 final String secA = securityA.getText().toString().trim();
 
                 Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
@@ -119,8 +119,10 @@ public class RegisterActivity extends AppCompatActivity {
                                     User newUser = new User(name, email);  // create the new User and store in the database
                                     newUser.setSecQ(secQ);
                                     newUser.setSecA(secA);
+                                    String[] splitEmail = email.split("@");
+                                    String localEmailName = splitEmail[0];
                                     DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");  // gets the reference to the "users" portion of the database
-                                    usersRef.child(email).setValue(newUser);  // generates unique ID for the user and saves to database
+                                    usersRef.child(localEmailName).setValue(newUser);  // generates unique ID for the user and saves to database
                                     startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                                     finish();
                                 }
