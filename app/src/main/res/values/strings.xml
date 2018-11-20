@@ -25,5 +25,7 @@
     </string-array>
     <string name="income">"Income"</string>
     <string name="expense">"Expense"</string>
+    <string name="yes">"Yes"</string>
+    <string name="no">"No"</string>
 
 </resources>
