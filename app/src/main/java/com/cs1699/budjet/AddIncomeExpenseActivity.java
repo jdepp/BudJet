@@ -55,9 +55,6 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_income_expense);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference usersRef = database.getReference("users");
-
         btnSubmit = (Button) findViewById(R.id.submit_button);
         income_or_expense = (RadioGroup) findViewById(R.id.radioSex);
         recurring = (RadioGroup) findViewById(R.id.radioSex2);
@@ -97,12 +94,22 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
                 if(income_expense_choice.getText().equals("Income")){
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                     Income i = new Income(null, recurr_bool, dValue, descrip, timeStamp);
-                    usersRef.child(HomeActivity.getCurrentUser()).child("incomes").setValue(i);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference usersRef = database.getReference("users");
+                    usersRef.child(HomeActivity.getCurrentUser()).child("incomes").push().setValue(i);
+                    Toast.makeText(mContext, "Income added", Toast.LENGTH_SHORT).show();
+                    Intent myIntent = new Intent(mContext, HomeActivity.class);
+                    startActivity(myIntent);
                 }
                 else {
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                     Expense e = new Expense(null, recurr_bool, dValue, descrip, timeStamp);
-
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference usersRef = database.getReference("users");
+                    usersRef.child(HomeActivity.getCurrentUser()).child("expenses").push().setValue(e);
+                    Toast.makeText(mContext, "Expense added", Toast.LENGTH_SHORT).show();
+                    Intent myIntent = new Intent(mContext, HomeActivity.class);
+                    startActivity(myIntent);
                 }
             }
         });

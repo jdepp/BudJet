@@ -27,21 +27,19 @@
             android:layout_margin="10dp"
             android:layout_below="@+id/welcome_textview"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="bottom">
-
-            <Button
-                android:id="@+id/add_income_expense"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Add Income/Expense"
-                android:onClick="onAddIncomeExpenseClicked"/>
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/add_income_expense"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="+"
+            android:onClick="onAddIncomeExpenseClicked"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="50dp"
+            android:background="#32CD32"
+            android:textColor="#ffffff"
+            android:textSize="30dp"
+            android:layout_marginRight="20dp"/>
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.cs1699.budjet.models;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @IgnoreExtraProperties
 public class User {
@@ -12,10 +13,10 @@ public class User {
     private String email;
     private String securityQuestions;
     private String securityAnswers;
-    private ArrayList<Expense> expenses = new ArrayList<>();
-    private ArrayList<Income> incomes = new ArrayList<>();
-    private ArrayList<Category> categories = new ArrayList<>();
-    private ArrayList<Budget> budgets = new ArrayList<>();
+    private List<Expense> expenses = new ArrayList<>();
+    private List<Income> incomes = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
+    private List<Budget> budgets = new ArrayList<>();
 
     public User() {
 
@@ -43,16 +44,16 @@ public class User {
     public String getSecA() { return this.securityAnswers; }
     public void setSecA(String secA) { this.securityAnswers = secA; }
 
-    public ArrayList<Income> getIncomes() { return this.incomes; }
+    public List<Income> getIncomes() { return this.incomes; }
     public void addIncome(Income income) { this.incomes.add(income); }
 
-    public ArrayList<Expense> getExpenses() { return this.expenses; }
+    public List<Expense> getExpenses() { return this.expenses; }
     public void addExpense(Expense expense) { this.expenses.add(expense); }
 
-    public ArrayList<Category> getCategories() { return this.categories; }
+    public List<Category> getCategories() { return this.categories; }
     public void addCategory(Category category) { this.categories.add(category); }
 
-    public ArrayList<Budget> getBudgets() { return this.budgets; }
+    public List<Budget> getBudgets() { return this.budgets; }
     public void setBudget(Budget budget, int index) { this.budgets.add(index, budget); }
 
     public String getEmail() { return this.email; }

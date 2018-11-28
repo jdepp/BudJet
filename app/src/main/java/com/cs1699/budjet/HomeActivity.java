@@ -43,17 +43,18 @@ public class HomeActivity extends AppCompatActivity {
 
         final TextView loggedInUserTextview = (TextView)findViewById(R.id.home_loggedin_user_textview);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = database.getReference("users");
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference usersRef = database.child("users");
         usersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<User> courses = new ArrayList<>();
+                List<User> users = new ArrayList<>();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    User user = child.getValue(User.class);
-                    if(user.getEmail().equals(currentUserEmail)) {
-                        String loggedInUserString = loggedInUserTextview.getText() + " " + user.getName();
-                        loggedInUserTextview.setText(loggedInUserString);
+                    String email = child.child("email").getValue().toString();
+                    String name = child.child("name").getValue().toString();
+                    if(email.equals(currentUserEmail)) {
+                        String nameText = loggedInUserTextview.getText() + " " + name;
+                        loggedInUserTextview.setText(nameText);
                     }
                 }
             }
