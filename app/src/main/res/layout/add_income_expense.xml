@@ -93,7 +93,36 @@
                     android:id="@+id/radioFemale2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/no" />
+                    android:text="@string/no"
+                    android:checked="false"/>
+
+            </RadioGroup>
+            <RadioGroup
+                android:id="@+id/radioSex3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+                <RadioButton
+                    android:id="@+id/radioDaily"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daily"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/radioWeekly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weekly" />
+
+                <RadioButton
+                    android:id="@+id/radioMonthly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monthly"
+                    android:checked="false" />
 
             </RadioGroup>
             <Button

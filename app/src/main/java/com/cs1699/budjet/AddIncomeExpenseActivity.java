@@ -62,17 +62,39 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
         inputDescription = (EditText) findViewById(R.id.income_expense_description);
         auth = FirebaseAuth.getInstance();
 
+
+        int input_expense_id = income_or_expense.getCheckedRadioButtonId();
+
+        income_expense_choice = (RadioButton) findViewById(input_expense_id);
+
+        recurring.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int recurring_id = recurring.getCheckedRadioButtonId();
+                recurring_choice = (RadioButton) findViewById(recurring_id);
+                RadioButton daily = (RadioButton) findViewById(R.id.radioDaily);
+                RadioButton weekly = (RadioButton) findViewById(R.id.radioWeekly);
+                RadioButton monthly = (RadioButton) findViewById(R.id.radioMonthly);
+
+                if( recurring_choice.getText().equals("Yes")) {
+                    daily.setVisibility(View.VISIBLE);
+                    weekly.setVisibility(View.VISIBLE);
+                    monthly.setVisibility(View.VISIBLE);
+                    recurr_bool = true;
+                }
+                else {
+                    daily.setVisibility(View.INVISIBLE);
+                    weekly.setVisibility(View.INVISIBLE);
+                    monthly.setVisibility(View.INVISIBLE);
+                    recurr_bool = false;
+                }
+            }
+        });
+
         // This block of code is triggered when the "Register" button is clicked
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                int input_expense_id = income_or_expense.getCheckedRadioButtonId();
-                int recurring_id = recurring.getCheckedRadioButtonId();
-                income_expense_choice = (RadioButton) findViewById(input_expense_id);
-                recurring_choice = (RadioButton) findViewById(recurring_id);
-                if( recurring_choice.getText().equals("Yes")) { recurr_bool = true; }
-                else { recurr_bool = false; }
 
                 String value = inputValue.getText().toString().trim();
                 String descrip = inputDescription.getText().toString().trim();
