@@ -2,9 +2,8 @@ package com.cs1699.budjet.models;
 
 import java.util.Date;
 
-public class Expense {
+public class Expense implements MoneyChange {
 
-    private String EID;
     private double Value;
     private String Description;
     private Category category;
@@ -22,9 +21,6 @@ public class Expense {
         this.Description = des;
         this.date = date;
     }
-
-    public String getID() { return this.EID; }
-    public void setID(String ID) { this.EID = ID; }
 
     public double getValue() { return this.Value; }
     public void setValue(double val) { this.Value = val; }

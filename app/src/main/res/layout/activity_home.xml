@@ -9,37 +9,75 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/welcome_textview"
+        <RelativeLayout
+            android:id="@+id/title_textview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textSize="30dp"
-            android:paddingTop="10dp"
-            android:text="Finance Overview"/>
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/welcome_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="30dp"
+                android:paddingTop="10dp"
+                android:text="Finance Overview"/>
+
+            <TextView
+                android:id="@+id/home_loggedin_user_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User:"
+                android:textSize="20dp"
+                android:layout_margin="10dp"
+                android:layout_below="@+id/welcome_textview"/>
+
+            <Button
+                android:id="@+id/add_income_expense"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="+"
+                android:onClick="onAddIncomeExpenseClicked"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="50dp"
+                android:background="#32CD32"
+                android:textColor="#ffffff"
+                android:textSize="30dp"
+                android:layout_marginRight="20dp"/>
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/home_loggedin_user_textview"
+            android:id="@+id/show_incomes_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User:"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
-            android:layout_below="@+id/welcome_textview"/>
-
-        <Button
-            android:id="@+id/add_income_expense"
-            android:layout_width="60dp"
+            android:layout_below="@+id/title_textview"/>
+        <TextView
+            android:id="@+id/show_expenses_textview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="+"
-            android:onClick="onAddIncomeExpenseClicked"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="50dp"
-            android:background="#32CD32"
-            android:textColor="#ffffff"
-            android:textSize="30dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_below="@id/show_incomes_textview"/>
+
+        <ScrollView
+            android:id="@+id/displayCandidatesLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10sp"
+            android:orientation="vertical"
+            android:layout_below="@+id/title_textview">
+
+
+            <iammert.com.expandablelib.ExpandableLayout
+                android:id="@+id/expandable_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                app:parentLayout="@layout/layout_parent"
+                app:childLayout="@layout/layout_child" />
+
+
+        </ScrollView>
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

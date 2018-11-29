@@ -61,11 +61,7 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
         inputValue = (EditText) findViewById(R.id.income_expense_val);
         inputDescription = (EditText) findViewById(R.id.income_expense_description);
         auth = FirebaseAuth.getInstance();
-
-
-        int input_expense_id = income_or_expense.getCheckedRadioButtonId();
-
-        income_expense_choice = (RadioButton) findViewById(input_expense_id);
+        recurr_bool = true;
 
         recurring.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -113,6 +109,8 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
                 }
 
                 double dValue = Double.parseDouble(value);
+                int input_expense_id = income_or_expense.getCheckedRadioButtonId();
+                income_expense_choice = (RadioButton) findViewById(input_expense_id);
                 if(income_expense_choice.getText().equals("Income")){
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                     Income i = new Income(null, recurr_bool, dValue, descrip, timeStamp);
