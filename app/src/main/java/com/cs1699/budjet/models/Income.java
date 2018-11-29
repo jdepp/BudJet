@@ -9,14 +9,16 @@ public class Income implements MoneyChange {
     private Category category;
     private String date;
     private boolean type;
+    private int recurRate; // 1 = daily, 2 = weekly, 3 = monthly
 
     public Income() {
 
     }
 
-    public Income(Category c, boolean rec, double val, String des, String date) {
+    public Income(Category c, boolean rec, int recurRate, double val, String des, String date) {
         this.category = c;
         this.type = rec;
+        this.recurRate = recurRate;
         this.Value = val;
         this.Description = des;
         this.date = date;
@@ -36,5 +38,8 @@ public class Income implements MoneyChange {
     
     public boolean isRecurring() { return this.type; }
     public void setType(boolean t) { this.type = t; }
+
+    public int getRecurRate() { return this.recurRate; }
+    public void setRecurRate() { this.recurRate = recurRate; }
 
 }
