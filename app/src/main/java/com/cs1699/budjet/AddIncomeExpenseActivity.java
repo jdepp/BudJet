@@ -127,7 +127,7 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
                         else if(recur_rate_choice.getText().equals("Weekly"))
                             i = new Income(null, recurr_bool, 2, dValue, descrip, timeStamp);
                         else if(recur_rate_choice.getText().equals("Monthly"))
-                            i = new Income(null, recurr_bool, 1, dValue, descrip, timeStamp);
+                            i = new Income(null, recurr_bool, 3, dValue, descrip, timeStamp);
                     }
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference usersRef = database.getReference("users");
@@ -148,7 +148,7 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
                         else if(recur_rate_choice.getText().equals("Weekly"))
                             e = new Expense(null, recurr_bool, 2, dValue, descrip, timeStamp);
                         else if(recur_rate_choice.getText().equals("Monthly"))
-                            e = new Expense(null, recurr_bool, 1, dValue, descrip, timeStamp);
+                            e = new Expense(null, recurr_bool, 3, dValue, descrip, timeStamp);
                     }
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference usersRef = database.getReference("users");
