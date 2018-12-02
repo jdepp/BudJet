@@ -13,6 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.cs1699.budjet.models.Budget;
+import com.cs1699.budjet.models.Category;
 import com.cs1699.budjet.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -117,12 +120,34 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                                 else {
                                     User newUser = new User(name, email);  // create the new User and store in the database
+
+
+
                                     newUser.setSecQ(secQ);
                                     newUser.setSecA(secA);
                                     String[] splitEmail = email.split("@");
                                     String localEmailName = splitEmail[0];
                                     DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");  // gets the reference to the "users" portion of the database
                                     usersRef.child(localEmailName).setValue(newUser);  // generates unique ID for the user and saves to database
+
+                                    // Create 3 default categories for the user
+                                    Category rent_c = new Category("Rent", "For Housing Costs", 2000);
+                                    Category food_c = new Category("Food", "For Food and Drink", 500);
+                                    Category entertainment_c = new Category("Entertainment", "For any miscellaneous spending", 500);
+
+                                    // Create 3 default (correlating) budgets
+                                    Budget rent_b = new Budget(rent_c, 2000);
+                                    Budget food_b = new Budget(food_c, 500);
+                                    Budget entertainment_b = new Budget(entertainment_c, 500);
+
+                                    usersRef.child(localEmailName).child("categories").push().setValue(rent_c);
+                                    usersRef.child(localEmailName).child("categories").push().setValue(food_c);
+                                    usersRef.child(localEmailName).child("categories").push().setValue(entertainment_c);
+
+                                    usersRef.child(localEmailName).child("budgets").push().setValue(rent_b);
+                                    usersRef.child(localEmailName).child("budgets").push().setValue(food_b);
+                                    usersRef.child(localEmailName).child("budgets").push().setValue(entertainment_b);
+
                                     startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                                     finish();
                                 }

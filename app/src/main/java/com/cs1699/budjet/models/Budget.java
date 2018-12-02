@@ -9,6 +9,10 @@ public class Budget {
     private double value;
 
 
+    public Budget() {
+
+    }
+    
     public Budget(Category category, double value) {
         this.id = 10;
         this.category = category;

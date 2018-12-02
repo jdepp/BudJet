@@ -9,14 +9,17 @@ public class Category {
     private String Description;
     private ArrayList<Expense> Expenses = new ArrayList<Expense>();
     private ArrayList<Income> Incomes = new ArrayList<Income>();
+    private Budget budget = new Budget();
 
     public Category() {
 
     }
     
-    public Category(String n, String d){
+    public Category(String n, String d, double b){
       this.Name = n;
       this.Description = d;
+      budget.setValue(b);
+      //budget.setCategory(this);
     }
     
     public String getName() { return this.Name; }
@@ -24,7 +27,9 @@ public class Category {
     
     public String getDescription() { return this.Description; }
     public void setDescription(String d) { this.Description = d; }
-    
+
+    public Budget getBudget() { return this.budget; }
+
     public ArrayList<Expense> getExpenses(){return this.Expenses;}
     
     public void addExpense(Expense exp){this.Expenses.add(exp);}
