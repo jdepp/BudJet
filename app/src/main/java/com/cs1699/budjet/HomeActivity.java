@@ -167,6 +167,10 @@ public class HomeActivity extends AppCompatActivity {
 //        });
     }
 
+    public void viewGraphClicked(View view) {
+        Intent myIntent = new Intent(this, GraphicalActivity.class);
+        startActivity(myIntent);
+    }
     public void onAddIncomeExpenseClicked(View view) {
             //Toast.makeText(mContext, "Hello", Toast.LENGTH_LONG).show();
             Intent myIntent = new Intent(this, AddIncomeExpenseActivity.class);

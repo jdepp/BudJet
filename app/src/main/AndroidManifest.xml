@@ -25,7 +25,9 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".AddIncomeExpenseActivity" />
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".GraphicalActivity">
+        </activity>
     </application>
 
 </manifest>

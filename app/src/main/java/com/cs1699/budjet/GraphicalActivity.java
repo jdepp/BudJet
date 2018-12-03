@@ -1,12 +1,11 @@
 package com.cs1699.budjet;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 import com.cs1699.budjet.models.Budget;
-import com.cs1699.budjet.models.Category;
 import com.cs1699.budjet.models.Expense;
 import com.cs1699.budjet.models.Income;
 import com.cs1699.budjet.models.User;
@@ -17,11 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -30,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
 
@@ -55,10 +50,6 @@ public class GraphicalActivity extends AppCompatActivity {
         String[] emailTokenized = currentUserEmail.split("@");
         currentUser = emailTokenized[0];
 
-        final TextView loggedInUserTextview = (TextView) findViewById(R.id.home_loggedin_user_textview);
-        final TextView showIncomesTextView = (TextView) findViewById(R.id.show_incomes_textview);
-        final TextView showExpensesTextView = (TextView) findViewById(R.id.show_expenses_textview);
-
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference usersRef = database.child("users");
         usersRef.addValueEventListener(new ValueEventListener() {
@@ -83,6 +74,14 @@ public class GraphicalActivity extends AppCompatActivity {
                         for (Map.Entry<String, Budget> budget : budgets.entrySet()){
                             budget_sum += budget.getValue().getValue();
                         }
+
+                        double total = expense_sum - income_sum;
+                        double remainder = budget_sum - total;
+                        pieData.add(new SliceValue((float)total, Color.RED).setLabel("Total Amount Spent"));
+                        pieData.add(new SliceValue((float)remainder, Color.GREEN).setLabel("Amount Left"));
+                        PieChartData pieChartData = new PieChartData(pieData);
+                        pieChartData.setHasLabels(true);
+                        pieChartView.setPieChartData(pieChartData);
                     }
                 }
             }
