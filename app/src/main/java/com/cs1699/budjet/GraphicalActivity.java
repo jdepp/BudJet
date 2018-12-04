@@ -1,9 +1,13 @@
 package com.cs1699.budjet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.cs1699.budjet.models.Budget;
 import com.cs1699.budjet.models.Expense;
@@ -30,20 +34,28 @@ import lecho.lib.hellocharts.view.PieChartView;
 
 public class GraphicalActivity extends AppCompatActivity {
 
-    PieChartView pieChartView = findViewById(R.id.chart);
+    PieChartView pieChartView;
 
-    List<SliceValue> pieData = new ArrayList<>();
+
 
     private final Context mContext = this;
     private static String currentUser;
     double income_sum = 0;
     double expense_sum = 0;
     double budget_sum = 0;
-
+    double total, remainder;
+    String show_graph;
+    Spinner graph_c;
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
 
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_graphical);
+        pieChartView = findViewById(R.id.chart);
+        final List<SliceValue> pieData = new ArrayList<>();
+
+
+        //Toast.makeText(mContext, "Displaying Graph", Toast.LENGTH_LONG).show();
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
         final String currentUserEmail = mFirebaseUser.getEmail();
@@ -74,24 +86,42 @@ public class GraphicalActivity extends AppCompatActivity {
                         for (Map.Entry<String, Budget> budget : budgets.entrySet()){
                             budget_sum += budget.getValue().getValue();
                         }
-
-                        double total = expense_sum - income_sum;
-                        double remainder = budget_sum - total;
-                        pieData.add(new SliceValue((float)total, Color.RED).setLabel("Total Amount Spent"));
-                        pieData.add(new SliceValue((float)remainder, Color.GREEN).setLabel("Amount Left"));
+                        total = expense_sum - income_sum;
+                        remainder = budget_sum - total;
+                        pieData.add(new SliceValue((float) total, Color.RED).setLabel("Total Amount Spent: $" + total));
+                        pieData.add(new SliceValue((float) remainder, Color.GREEN).setLabel("Amount Left: $" + remainder));
                         PieChartData pieChartData = new PieChartData(pieData);
                         pieChartData.setHasLabels(true);
+                        pieChartData.setHasCenterCircle(true).setCenterText1("Total Budget: $" + budget_sum).setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
                         pieChartView.setPieChartData(pieChartData);
+
                     }
                 }
-            }
 
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+
     }
 
+    public void viewGraphClicked(View view) {
+        graph_c = findViewById(R.id.graph_choice);
+        show_graph = graph_c.getSelectedItem().toString();
+        if(show_graph.equalsIgnoreCase("rent")){
+            Intent myIntent = new Intent(this, com.cs1699.budjet.RentGraphicalActivity.class);
+            startActivity(myIntent);
+        }
+        else if(show_graph.equalsIgnoreCase("entertainment")){
+            Intent myIntent = new Intent(this, EntertainmentGraphicalActivity.class);
+            startActivity(myIntent);
+        }
+        else if(show_graph.equalsIgnoreCase("food")){
+            Intent myIntent = new Intent(this, FoodGraphicalActivity.class);
+            startActivity(myIntent);
+        }
 
+    }
 }

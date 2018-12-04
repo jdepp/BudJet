@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.cs1699.budjet.GraphicalActivity;
+import com.cs1699.budjet.R;
+import com.cs1699.budjet.RentGraphicalActivity;
 import com.cs1699.budjet.models.Budget;
 import com.cs1699.budjet.models.Category;
 import com.cs1699.budjet.models.Expense;
