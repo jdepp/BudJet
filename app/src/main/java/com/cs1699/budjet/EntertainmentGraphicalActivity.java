@@ -51,8 +51,6 @@ public class EntertainmentGraphicalActivity extends AppCompatActivity {
         pieChartView = findViewById(R.id.chart_entertainment);
         final List<SliceValue> pieData = new ArrayList<>();
 
-
-        Toast.makeText(mContext, "Displaying Graph", Toast.LENGTH_LONG).show();
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
         final String currentUserEmail = mFirebaseUser.getEmail();
@@ -92,7 +90,7 @@ public class EntertainmentGraphicalActivity extends AppCompatActivity {
                         pieData.add(new SliceValue((float) remainder, Color.GREEN).setLabel("Amount Left: $" + remainder));
                         PieChartData pieChartData = new PieChartData(pieData);
                         pieChartData.setHasLabels(true);
-                        pieChartData.setHasCenterCircle(true).setCenterText1("Total Budget: $" + entertainment_b).setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
+                        pieChartData.setHasCenterCircle(true).setCenterText1("Entertainment Budget: $" + entertainment_b).setCenterText1FontSize(12).setCenterText1Color(Color.parseColor("#0097A7"));
                         pieChartView.setPieChartData(pieChartData);
 
                     }
@@ -122,5 +120,10 @@ public class EntertainmentGraphicalActivity extends AppCompatActivity {
             startActivity(myIntent);
         }
 
+    }
+
+    public void goHome(View view) {
+        Intent myIntent = new Intent(this, HomeActivity.class);
+        startActivity(myIntent);
     }
 }

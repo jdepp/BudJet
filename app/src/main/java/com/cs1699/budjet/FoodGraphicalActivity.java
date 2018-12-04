@@ -57,8 +57,6 @@ public class FoodGraphicalActivity extends AppCompatActivity {
         pieChartView = findViewById(R.id.chart_food);
         final List<SliceValue> pieData = new ArrayList<>();
 
-
-        Toast.makeText(mContext, "Displaying Graph", Toast.LENGTH_LONG).show();
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
         final String currentUserEmail = mFirebaseUser.getEmail();
@@ -98,7 +96,7 @@ public class FoodGraphicalActivity extends AppCompatActivity {
                         pieData.add(new SliceValue((float) remainder, Color.GREEN).setLabel("Amount Left: $" + remainder));
                         PieChartData pieChartData = new PieChartData(pieData);
                         pieChartData.setHasLabels(true);
-                        pieChartData.setHasCenterCircle(true).setCenterText1("Total Budget: $" + food_b).setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
+                        pieChartData.setHasCenterCircle(true).setCenterText1("Food Budget: $" + food_b).setCenterText1FontSize(15).setCenterText1Color(Color.parseColor("#0097A7"));
                         pieChartView.setPieChartData(pieChartData);
 
                     }
@@ -119,14 +117,19 @@ public class FoodGraphicalActivity extends AppCompatActivity {
             Intent myIntent = new Intent(this, RentGraphicalActivity.class);
             startActivity(myIntent);
         }
-        /*else if(show_graph.equalsIgnoreCase("entertainment")){
+        else if(show_graph.equalsIgnoreCase("entertainment")){
             Intent myIntent = new Intent(this, EntertainmentGraphicalActivity.class);
             startActivity(myIntent);
-        }*/
+        }
         else if(show_graph.equalsIgnoreCase("Overall")){
             Intent myIntent = new Intent(this, GraphicalActivity.class);
             startActivity(myIntent);
         }
 
+    }
+
+    public void goHome(View view) {
+        Intent myIntent = new Intent(this, HomeActivity.class);
+        startActivity(myIntent);
     }
 }

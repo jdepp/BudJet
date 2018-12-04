@@ -54,8 +54,6 @@ public class GraphicalActivity extends AppCompatActivity {
         pieChartView = findViewById(R.id.chart);
         final List<SliceValue> pieData = new ArrayList<>();
 
-
-        //Toast.makeText(mContext, "Displaying Graph", Toast.LENGTH_LONG).show();
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
         final String currentUserEmail = mFirebaseUser.getEmail();
@@ -92,7 +90,7 @@ public class GraphicalActivity extends AppCompatActivity {
                         pieData.add(new SliceValue((float) remainder, Color.GREEN).setLabel("Amount Left: $" + remainder));
                         PieChartData pieChartData = new PieChartData(pieData);
                         pieChartData.setHasLabels(true);
-                        pieChartData.setHasCenterCircle(true).setCenterText1("Total Budget: $" + budget_sum).setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
+                        pieChartData.setHasCenterCircle(true).setCenterText1("Overall Budget: $" + budget_sum).setCenterText1FontSize(15).setCenterText1Color(Color.parseColor("#0097A7"));
                         pieChartView.setPieChartData(pieChartData);
 
                     }
@@ -111,7 +109,7 @@ public class GraphicalActivity extends AppCompatActivity {
         graph_c = findViewById(R.id.graph_choice);
         show_graph = graph_c.getSelectedItem().toString();
         if(show_graph.equalsIgnoreCase("rent")){
-            Intent myIntent = new Intent(this, com.cs1699.budjet.RentGraphicalActivity.class);
+            Intent myIntent = new Intent(this, RentGraphicalActivity.class);
             startActivity(myIntent);
         }
         else if(show_graph.equalsIgnoreCase("entertainment")){
@@ -123,5 +121,10 @@ public class GraphicalActivity extends AppCompatActivity {
             startActivity(myIntent);
         }
 
+    }
+
+    public void goHome(View view) {
+        Intent myIntent = new Intent(this, HomeActivity.class);
+        startActivity(myIntent);
     }
 }
