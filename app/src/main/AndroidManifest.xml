@@ -26,7 +26,10 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".AddIncomeExpenseActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".GraphicalActivity">
+        <activity android:name=".GraphicalActivity" />
+        <activity android:name=".FoodGraphicalActivity" />
+        <activity android:name=".EntertainmentGraphicalActivity" />
+        <activity android:name=".RentGraphicalActivity">
         </activity>
     </application>
 

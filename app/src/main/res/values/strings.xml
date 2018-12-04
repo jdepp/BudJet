@@ -27,5 +27,16 @@
     <string name="expense">"Expense"</string>
     <string name="yes">"Yes"</string>
     <string name="no">"No"</string>
+    <string-array name="graph_list">
+        <item>Overall</item>
+        <item>Rent</item>
+        <item>Food</item>
+        <item>Entertainment</item>
+    </string-array>
+    <string-array name="category_list">
+        <item>Rent</item>
+        <item>Food</item>
+        <item>Entertainment</item>
+    </string-array>
 
 </resources>

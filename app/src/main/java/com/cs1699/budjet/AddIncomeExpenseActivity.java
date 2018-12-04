@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.cs1699.budjet.models.Category;
 import com.cs1699.budjet.models.Expense;
 import com.cs1699.budjet.models.Income;
 import com.cs1699.budjet.models.User;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +48,9 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
     private Boolean recurr_bool;
     private RadioGroup income_or_expense, recurring, recur_rate;
     private RadioButton income_expense_choice, recurring_choice, recur_rate_choice;
+    private Spinner category_spinner;
+    private String category_string;
+    private Category new_c;
     private Button btnSubmit;
     private FirebaseAuth auth;
     private FirebaseDatabase mDatabase;
@@ -56,6 +61,8 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
         setContentView(R.layout.add_income_expense);
 
         btnSubmit = (Button) findViewById(R.id.submit_button);
+        category_spinner = (Spinner) findViewById(R.id.inc_exp_category);
+        category_string = category_spinner.getSelectedItem().toString();
         income_or_expense = (RadioGroup) findViewById(R.id.radioSex);
         recurring = (RadioGroup) findViewById(R.id.radioSex2);
         recur_rate = (RadioGroup) findViewById(R.id.radioSex3) ;
@@ -115,19 +122,25 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
                 recur_rate_choice = (RadioButton) findViewById(recur_rate_id);
                 int input_expense_id = income_or_expense.getCheckedRadioButtonId();
                 income_expense_choice = (RadioButton) findViewById(input_expense_id);
+                if(category_string.equalsIgnoreCase("Rent"))
+                    new_c = new Category("Rent", "For Housing Costs", 2000);
+                else if(category_string.equalsIgnoreCase("Entertainment"))
+                    new_c = new Category("Entertainment", "For any miscellaneous spending", 500);
+                else if(category_string.equalsIgnoreCase("Food"))
+                    new_c = new Category("Food", "For Food and Drink", 500);
                 if(income_expense_choice.getText().equals("Income")){
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                     Income i = new Income();
                     if(recur_rate_choice == null) {  // If the recur rate choice is null, it's not recurring
-                        i = new Income(null, recurr_bool, -1, dValue, descrip, timeStamp);
+                        i = new Income(new_c, recurr_bool, -1, dValue, descrip, timeStamp);
                     }
                     else {
                         if(recur_rate_choice.getText().equals("Daily"))
-                            i = new Income(null, recurr_bool, 1, dValue, descrip, timeStamp);
+                            i = new Income(new_c, recurr_bool, 1, dValue, descrip, timeStamp);
                         else if(recur_rate_choice.getText().equals("Weekly"))
-                            i = new Income(null, recurr_bool, 2, dValue, descrip, timeStamp);
+                            i = new Income(new_c, recurr_bool, 2, dValue, descrip, timeStamp);
                         else if(recur_rate_choice.getText().equals("Monthly"))
-                            i = new Income(null, recurr_bool, 3, dValue, descrip, timeStamp);
+                            i = new Income(new_c, recurr_bool, 3, dValue, descrip, timeStamp);
                     }
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference usersRef = database.getReference("users");
@@ -140,15 +153,15 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                     Expense e = new Expense();
                     if(recur_rate_choice == null) {  // If the recur rate choice is null, it's not recurring
-                        e = new Expense(null, recurr_bool, -1, dValue, descrip, timeStamp);
+                        e = new Expense(new_c, recurr_bool, -1, dValue, descrip, timeStamp);
                     }
                     else {
                         if(recur_rate_choice.getText().equals("Daily"))
-                            e = new Expense(null, recurr_bool, 1, dValue, descrip, timeStamp);
+                            e = new Expense(new_c, recurr_bool, 1, dValue, descrip, timeStamp);
                         else if(recur_rate_choice.getText().equals("Weekly"))
-                            e = new Expense(null, recurr_bool, 2, dValue, descrip, timeStamp);
+                            e = new Expense(new_c, recurr_bool, 2, dValue, descrip, timeStamp);
                         else if(recur_rate_choice.getText().equals("Monthly"))
-                            e = new Expense(null, recurr_bool, 3, dValue, descrip, timeStamp);
+                            e = new Expense(new_c, recurr_bool, 3, dValue, descrip, timeStamp);
                     }
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference usersRef = database.getReference("users");
