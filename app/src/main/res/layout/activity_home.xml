@@ -49,7 +49,7 @@
             <Button
                 android:id="@+id/view_graph"
                 android:layout_width="75dp"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:text="View Graph"
                 android:onClick="viewGraphClicked"
