@@ -2,13 +2,13 @@ package com.cs1699.budjet.models;
 
 import java.util.Date;
 
-public class Income implements MoneyChange {
+public class Income {
 
     private double Value;
     private String Description;
     private Category category;
     private String date;
-    private boolean type;
+    private boolean recurring;
     private int recurRate; // 1 = daily, 2 = weekly, 3 = monthly
 
     public Income() {
@@ -17,7 +17,7 @@ public class Income implements MoneyChange {
 
     public Income(Category c, boolean rec, int recurRate, double val, String des, String date) {
         this.category = c;
-        this.type = rec;
+        this.recurring = rec;
         this.recurRate = recurRate;
         this.Value = val;
         this.Description = des;
@@ -36,8 +36,8 @@ public class Income implements MoneyChange {
     public String getDate() { return this.date; }
     public void setDate(String d) { this.date = d; }
     
-    public boolean isRecurring() { return this.type; }
-    public void setType(boolean t) { this.type = t; }
+    public boolean isRecurring() { return this.recurring; }
+    public void setType(boolean t) { this.recurring = t; }
 
     public int getRecurRate() { return this.recurRate; }
     public void setRecurRate() { this.recurRate = recurRate; }

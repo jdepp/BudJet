@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.cs1699.budjet.models.Category;
 import com.cs1699.budjet.models.Expense;
 import com.cs1699.budjet.models.Income;
-import com.cs1699.budjet.models.MoneyChange;
 import com.cs1699.budjet.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -112,10 +111,32 @@ public class HomeActivity extends AppCompatActivity {
                             Section<String, String> section = new Section<>();
                             section.parent = category.getValue().getName();
                             for(Map.Entry<String, Income> income : incomes.entrySet()) {
-                                if(income.getValue().getCategory().getName().equals(category.getValue().getName())) { section.children.add("Income: $" + income.getValue().getValue() + " - " + income.getValue().getDescription()); }
+                                if(income.getValue().getCategory().getName().equals(category.getValue().getName())) {
+                                    String recurring = "";
+                                    if(income.getValue().isRecurring()) {
+                                        if(income.getValue().getRecurRate() == 1) { recurring = "recurring daily"; }
+                                        else if(income.getValue().getRecurRate() == 2) { recurring = "recurring weekly"; }
+                                        else if(income.getValue().getRecurRate() == 3) { recurring = "recurring monthly"; }
+                                    }
+                                    else {
+                                        recurring = "one time";
+                                    }
+                                    section.children.add("Income " + recurring + ": $" + income.getValue().getValue() + " - " + income.getValue().getDescription());
+                                }
                             }
                             for(Map.Entry<String, Expense> expense : expenses.entrySet()) {
-                                if(expense.getValue().getCategory().getName().equals(category.getValue().getName())) { section.children.add("Expense: $" + expense.getValue().getValue() + " - " + expense.getValue().getDescription()); }
+                                if(expense.getValue().getCategory().getName().equals(category.getValue().getName())) {
+                                    String recurring = "";
+                                    if(expense.getValue().isRecurring()) {
+                                        if(expense.getValue().getRecurRate() == 1) { recurring = "recurring daily"; }
+                                        else if(expense.getValue().getRecurRate() == 2) { recurring = "recurring weekly"; }
+                                        else if(expense.getValue().getRecurRate() == 3) { recurring = "recurring monthly"; }
+                                    }
+                                    else {
+                                        recurring = "one time";
+                                    }
+                                    section.children.add("Expense " + recurring + ": $" + expense.getValue().getValue() + " - " + expense.getValue().getDescription());
+                                }
                             }
                             layout.addSection(section);
                         }
@@ -129,74 +150,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        // Working on the Expandable Layout in the home screen that shows the categories and their lists of incomes/expenses
-//        final ExpandableLayout layout = (ExpandableLayout) findViewById(R.id.expandable_layout);
-//        layout.setRenderer(new ExpandableLayout.Renderer<Category,MoneyChange>() {
-//
-//            @Override
-//            public void renderParent(View view, String course, boolean isExpanded, int parentPosition) {
-//                ((TextView)view.findViewById(R.id.tv_parent_name)).setText(course.getName());
-//                view.findViewById(R.id.arrow).setBackgroundResource(isExpanded?R.drawable.ic_arrow_up: R.drawable.ic_arrow_down);
-//            }
-//
-//            @Override
-//            public void renderChild(View view, String string, int parentPosition, int childPosition) {
-//                ((TextView)view.findViewById(R.id.tv_child_name)).setText(string);
-//            }
-//        });
-//
-//        layout.setExpandListener(new ExpandCollapseListener.ExpandListener<String>() {
-//            @Override
-//            public void onExpanded(int i, final Course courseExpanded, View layout) {
-//                final Course c = courseExpanded;
-//                TextView parentText = (TextView)layout.findViewById(R.id.tv_parent_name);
-//                parentText.setTypeface(null, Typeface.BOLD);
-//                Button editClassButton = (Button)layout.findViewById(R.id.editClassButton);
-//                Button deleteClassButton = (Button)layout.findViewById(R.id.deleteClassButton);
-//                editClassButton.setVisibility(View.VISIBLE);
-//                deleteClassButton.setVisibility(View.VISIBLE);
-//                editClassButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        createAddClassPopup(true, c.getName(), Integer.toString(c.getCredits()), c.getGrade());
-//                    }
-//                });
-//                deleteClassButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                        builder.setTitle("Delete this course?");
-//                        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                dba.deleteClass(courseExpanded);
-//                                displayToast(courseExpanded.getName() + " deleted");
-//                                dialog.dismiss();
-//                                refreshFragment();
-//                            }
-//                        });
-//                        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                displayToast(courseExpanded.getName() + " not deleted");
-//                            }
-//                        });
-//                        AlertDialog dialog = builder.create();
-//                        dialog.show();
-//                    }
-//                });
-//            }
-//        });
-//
-//        layout.setCollapseListener(new ExpandCollapseListener.CollapseListener<Course>() {
-//            @Override
-//            public void onCollapsed(int i, Course courseCollapsed, View layout) {
-//                TextView parentText = (TextView)layout.findViewById(R.id.tv_parent_name);
-//                parentText.setTypeface(null, Typeface.NORMAL);
-//                Button editClassButton = (Button)layout.findViewById(R.id.editClassButton);
-//                editClassButton.setVisibility(View.INVISIBLE);
-//                Button deleteClassButton = (Button)layout.findViewById(R.id.deleteClassButton);
-//                deleteClassButton.setVisibility(View.INVISIBLE);
-//            }
-//        });
     }
 
     public void viewGraphClicked(View view) {
