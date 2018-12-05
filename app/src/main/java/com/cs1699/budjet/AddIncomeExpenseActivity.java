@@ -62,7 +62,6 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
 
         btnSubmit = (Button) findViewById(R.id.submit_button);
         category_spinner = (Spinner) findViewById(R.id.inc_exp_category);
-        category_string = category_spinner.getSelectedItem().toString();
         income_or_expense = (RadioGroup) findViewById(R.id.radioSex);
         recurring = (RadioGroup) findViewById(R.id.radioSex2);
         recur_rate = (RadioGroup) findViewById(R.id.radioSex3) ;
@@ -117,6 +116,7 @@ public class AddIncomeExpenseActivity extends AppCompatActivity {
                     return;
                 }
 
+                category_string = category_spinner.getSelectedItem().toString();
                 double dValue = Double.parseDouble(value);
                 int recur_rate_id = recur_rate.getCheckedRadioButtonId();
                 recur_rate_choice = (RadioButton) findViewById(recur_rate_id);

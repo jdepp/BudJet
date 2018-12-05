@@ -39,6 +39,7 @@ import java.util.Map;
 
 import iammert.com.expandablelib.ExpandCollapseListener;
 import iammert.com.expandablelib.ExpandableLayout;
+import iammert.com.expandablelib.Section;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -57,14 +58,44 @@ public class HomeActivity extends AppCompatActivity {
         currentUser = emailTokenized[0];
 
         final TextView loggedInUserTextview = (TextView)findViewById(R.id.home_loggedin_user_textview);
-        final TextView showIncomesTextView = (TextView)findViewById(R.id.show_incomes_textview);
-        final TextView showExpensesTextView = (TextView)findViewById(R.id.show_expenses_textview);
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference usersRef = database.child("users");
         usersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // Working on the Expandable Layout in the home screen that shows the categories and their lists of incomes/expenses
+                final ExpandableLayout layout = (ExpandableLayout) findViewById(R.id.expandable_layout);
+                layout.setRenderer(new ExpandableLayout.Renderer<String,String>() {
+
+                    @Override
+                    public void renderParent(View view, String string, boolean isExpanded, int parentPosition) {
+                        ((TextView)view.findViewById(R.id.category_textview)).setText(string);
+                        view.findViewById(R.id.arrow).setBackgroundResource(isExpanded?R.drawable.ic_arrow_up: R.drawable.ic_arrow_down);
+                    }
+
+                    @Override
+                    public void renderChild(View view, String string, int parentPosition, int childPosition) {
+                        ((TextView)view.findViewById(R.id.income_expense_textview)).setText(string);
+                    }
+                });
+
+                layout.setExpandListener(new ExpandCollapseListener.ExpandListener<String>() {
+                    @Override
+                    public void onExpanded(int i, final String string, View layout) {
+                        TextView parentText = (TextView)layout.findViewById(R.id.category_textview);
+                        parentText.setTypeface(null, Typeface.BOLD);
+                    }
+                });
+
+                layout.setCollapseListener(new ExpandCollapseListener.CollapseListener<String>() {
+                    @Override
+                    public void onCollapsed(int i, String string, View layout) {
+                        TextView parentText = (TextView)layout.findViewById(R.id.category_textview);
+                        parentText.setTypeface(null, Typeface.NORMAL);
+                    }
+                });
+
                 List<User> users = new ArrayList<>();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     User user = child.getValue(User.class);
@@ -74,19 +105,20 @@ public class HomeActivity extends AppCompatActivity {
                         String nameText = "User: " + user.getName();
                         loggedInUserTextview.setText(nameText);
 
-                        String incomesString = "Incomes:";
                         HashMap<String, Income> incomes = user.getIncomes();  // The user's list properties are store as HashMaps in Firebase
-                        for (Map.Entry<String, Income> income : incomes.entrySet()) {  // Iterate through the hashmap of incomes and append each income to a string to be displayed
-                            incomesString = incomesString + "\nValue: " + income.getValue().getValue() +  "   Description: " + income.getValue().getDescription();
+                        HashMap<String, Expense> expenses = user.getExpenses();
+                        HashMap<String, Category> categories = user.getCategories();
+                        for (Map.Entry<String, Category> category : categories.entrySet()) {
+                            Section<String, String> section = new Section<>();
+                            section.parent = category.getValue().getName();
+                            for(Map.Entry<String, Income> income : incomes.entrySet()) {
+                                if(income.getValue().getCategory().getName().equals(category.getValue().getName())) { section.children.add("Income: $" + income.getValue().getValue() + " - " + income.getValue().getDescription()); }
+                            }
+                            for(Map.Entry<String, Expense> expense : expenses.entrySet()) {
+                                if(expense.getValue().getCategory().getName().equals(category.getValue().getName())) { section.children.add("Expense: $" + expense.getValue().getValue() + " - " + expense.getValue().getDescription()); }
+                            }
+                            layout.addSection(section);
                         }
-                        showIncomesTextView.setText(incomesString);  // Show this string of incomes
-
-                        String expensesString = "\nExpenses:";
-                        HashMap<String, Expense> expenses = user.getExpenses();  // Show expenses as well.
-                        for (Map.Entry<String, Expense> expense : expenses.entrySet()) {  // This is how we're going to iterate thru the user's hashpmap properties
-                            expensesString = expensesString + "\nValue: " + expense.getValue().getValue() + "   Description: " + expense.getValue().getDescription();
-                        }
-                        showExpensesTextView.setText(expensesString);
                     }
                 }
             }

@@ -19,6 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
                 android:textSize="30dp"
                 android:paddingTop="10dp"
                 android:text="Finance Overview"/>
@@ -40,7 +41,8 @@
                 android:text="+"
                 android:onClick="onAddIncomeExpenseClicked"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="5dp"
                 android:background="#32CD32"
                 android:textColor="#ffffff"
                 android:textSize="30dp"
@@ -48,50 +50,57 @@
 
             <Button
                 android:id="@+id/view_graph"
-                android:layout_width="75dp"
-                android:layout_height="40dp"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="View Graph"
+                android:layout_marginBottom="5dp"
                 android:onClick="viewGraphClicked"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="50dp"
+                android:layout_toLeftOf="@+id/add_income_expense"
+                android:layout_marginTop="60dp"
                 android:background="#000000"
                 android:textColor="#ffffff"
                 android:textSize="10dp"
-                android:layout_marginRight="20dp"/>
+                android:layout_marginRight="5dp"/>
+
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/show_incomes_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/title_textview"/>
-        <TextView
-            android:id="@+id/show_expenses_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/show_incomes_textview"/>
-
-        <ScrollView
-            android:id="@+id/displayCandidatesLinearLayout"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10sp"
-            android:orientation="vertical"
-            android:layout_below="@+id/title_textview">
+            android:layout_below="@+id/title_textview" >
 
+            <TextView
+                android:id="@+id/category_title_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:text="How your money is broken up:"/>
 
-            <iammert.com.expandablelib.ExpandableLayout
-                android:id="@+id/expandable_layout"
+            <ScrollView
+                android:id="@+id/displayCandidatesLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                app:parentLayout="@layout/layout_parent"
-                app:childLayout="@layout/layout_child" />
+                android:layout_marginTop="5sp"
+                android:orientation="vertical"
+                android:layout_below="@id/category_title_textview">
 
 
-        </ScrollView>
+                <iammert.com.expandablelib.ExpandableLayout
+                    android:id="@+id/expandable_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    app:parentLayout="@layout/layout_parent"
+                    app:childLayout="@layout/layout_child" />
+
+
+            </ScrollView>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
