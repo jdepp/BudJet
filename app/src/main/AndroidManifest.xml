@@ -29,6 +29,7 @@
         <activity android:name=".GraphicalActivity" />
         <activity android:name=".FoodGraphicalActivity" />
         <activity android:name=".EntertainmentGraphicalActivity" />
+        <activity android:name=".SuggestionsActivity" />
         <activity android:name=".RentGraphicalActivity">
         </activity>
     </application>

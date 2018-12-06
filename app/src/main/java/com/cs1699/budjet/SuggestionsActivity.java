@@ -1,13 +1,14 @@
 package com.cs1699.budjet;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cs1699.budjet.R;
 import com.cs1699.budjet.models.Category;
 import com.cs1699.budjet.models.Expense;
 import com.cs1699.budjet.models.Income;
@@ -20,7 +21,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,15 +36,14 @@ import iammert.com.expandablelib.ExpandCollapseListener;
 import iammert.com.expandablelib.ExpandableLayout;
 import iammert.com.expandablelib.Section;
 
-public class HomeActivity extends AppCompatActivity {
-
+public class SuggestionsActivity extends AppCompatActivity {
     private final Context mContext = this;
     private static String currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_suggestions);
 
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -45,7 +51,6 @@ public class HomeActivity extends AppCompatActivity {
         String[] emailTokenized = currentUserEmail.split("@");
         currentUser = emailTokenized[0];
 
-        final TextView loggedInUserTextview = (TextView)findViewById(R.id.home_loggedin_user_textview);
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         DatabaseReference usersRef = database.child("users");
@@ -90,43 +95,57 @@ public class HomeActivity extends AppCompatActivity {
                     users.add(user);
                     if(user.getEmail().equals(currentUserEmail)) {
                         // We now have access to the currently logged in User and can access its properties
-                        String nameText = "User: " + user.getName();
-                        loggedInUserTextview.setText(nameText);
-
+                        Calendar c = Calendar.getInstance();
+                        int daysInMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+                        int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
                         HashMap<String, Income> incomes = user.getIncomes();  // The user's list properties are store as HashMaps in Firebase
                         HashMap<String, Expense> expenses = user.getExpenses();
                         HashMap<String, Category> categories = user.getCategories();
                         for (Map.Entry<String, Category> category : categories.entrySet()) {
+                            double curr_total = 0;
+                            double curr_b = category.getValue().getBudget().getValue();
+
                             Section<String, String> section = new Section<>();
                             section.parent = category.getValue().getName();
                             for(Map.Entry<String, Income> income : incomes.entrySet()) {
                                 if(income.getValue().getCategory().getName().equals(category.getValue().getName())) {
-                                    String recurring = "";
                                     if(income.getValue().isRecurring()) {
-                                        if(income.getValue().getRecurRate() == 1) { recurring = "recurring daily"; }
-                                        else if(income.getValue().getRecurRate() == 2) { recurring = "recurring weekly"; }
-                                        else if(income.getValue().getRecurRate() == 3) { recurring = "recurring monthly"; }
+                                        int i_month = Integer.parseInt(income.getValue().getDate().substring(4, 6))-1;
+                                        int i_day = Integer.parseInt(income.getValue().getDate().substring(6, 8));
+                                        int i_year = Integer.parseInt(income.getValue().getDate().substring(0, 4));
+                                        Calendar cal = new GregorianCalendar(i_year, i_month, i_day);
+                                        int i_days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+                                        if(income.getValue().getRecurRate() == 1) { curr_total -= (income.getValue().getValue() * (i_days - i_day)); }
+                                        else if(income.getValue().getRecurRate() == 2) { curr_total -= (income.getValue().getValue() * Math.floor((i_days-i_day)/7)); }
+                                        else if(income.getValue().getRecurRate() == 3) { curr_total -= income.getValue().getValue(); }
                                     }
-                                    else {
-                                        recurring = "one time";
-                                    }
-                                    section.children.add("Income " + recurring + ": $" + income.getValue().getValue() + " - " + income.getValue().getDescription());
+                                    else { curr_total -= income.getValue().getValue(); }
                                 }
                             }
                             for(Map.Entry<String, Expense> expense : expenses.entrySet()) {
                                 if(expense.getValue().getCategory().getName().equals(category.getValue().getName())) {
-                                    String recurring = "";
                                     if(expense.getValue().isRecurring()) {
-                                        if(expense.getValue().getRecurRate() == 1) { recurring = "recurring daily"; }
-                                        else if(expense.getValue().getRecurRate() == 2) { recurring = "recurring weekly"; }
-                                        else if(expense.getValue().getRecurRate() == 3) { recurring = "recurring monthly"; }
+                                        int e_month = Integer.parseInt(expense.getValue().getDate().substring(4, 5))-1;
+                                        int e_day = Integer.parseInt(expense.getValue().getDate().substring(6, 7));
+                                        int e_year = Integer.parseInt(expense.getValue().getDate().substring(0, 3));
+                                        Calendar cal = new GregorianCalendar(e_year, e_month, e_day);
+                                        int e_days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+                                        if(expense.getValue().getRecurRate() == 1) {
+                                            curr_total += expense.getValue().getValue() * (e_days-e_day);
+                                        }
+                                        else if(expense.getValue().getRecurRate() == 2) { curr_total += expense.getValue().getValue() * Math.floor((e_days-e_day)/7); }    // Weekly
+                                        else if(expense.getValue().getRecurRate() == 3) { curr_total += expense.getValue().getValue(); }        // Monthly
                                     }
-                                    else {
-                                        recurring = "one time";
-                                    }
-                                    section.children.add("Expense " + recurring + ": $" + expense.getValue().getValue() + " - " + expense.getValue().getDescription());
+                                    else { curr_total += expense.getValue().getValue(); }                                                        // One-time
+                                    //section.children.add("Expense " + recurring + ": $" + expense.getValue().getValue() + " - " + expense.getValue().getDescription());
                                 }
                             }
+                            double remainder = curr_b - curr_total;
+                            DecimalFormat nf = new DecimalFormat("#.00");
+                            section.children.add("You are $" + remainder + " away from your " + category.getValue().getName() + " budget!");
+
+                            section.children.add("There are: " +Integer.toString(daysInMonth-dayOfMonth) + " days remaining this month");
+                            section.children.add("You may spend " + nf.format(remainder/(daysInMonth/dayOfMonth)) + " per day for the rest of the month");
                             layout.addSection(section);
                         }
                     }
@@ -140,24 +159,4 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
-
-    public void viewGraphClicked(View view) {
-        Intent myIntent = new Intent(this, GraphicalActivity.class);
-        startActivity(myIntent);
-    }
-
-    public void viewSuggestions(View view) {
-        Intent myIntent = new Intent(this, SuggestionsActivity.class);
-        startActivity(myIntent);
-    }
-    public void onAddIncomeExpenseClicked(View view) {
-            //Toast.makeText(mContext, "Hello", Toast.LENGTH_LONG).show();
-            Intent myIntent = new Intent(this, AddIncomeExpenseActivity.class);
-            startActivity(myIntent);
-    }
-
-    public static String getCurrentUser() {
-        return HomeActivity.currentUser;
-    }
 }
-

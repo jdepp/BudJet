@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,11 +75,31 @@ public class GraphicalActivity extends AppCompatActivity {
                         // We now have access to the currently logged in User and can access its properties
                         HashMap<String, Income> incomes = user.getIncomes();  // The user's list properties are store as HashMaps in Firebase
                         for (Map.Entry<String, Income> income : incomes.entrySet()) {  // Iterate through the hashmap of incomes and append each income to a string to be displayed
-                            income_sum += income.getValue().getValue();
+                            if(income.getValue().isRecurring()) {
+                                int i_month = Integer.parseInt(income.getValue().getDate().substring(4, 6))-1;
+                                int i_day = Integer.parseInt(income.getValue().getDate().substring(6, 8));
+                                int i_year = Integer.parseInt(income.getValue().getDate().substring(0, 4));
+                                Calendar cal = new GregorianCalendar(i_year, i_month, i_day);
+                                int i_days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+                                if(income.getValue().getRecurRate() == 1) { income_sum += (income.getValue().getValue() * (i_days - i_day)); }
+                                else if(income.getValue().getRecurRate() == 2) { income_sum += (income.getValue().getValue() * Math.floor((i_days-i_day)/7)); }
+                                else if(income.getValue().getRecurRate() == 3) { income_sum += income.getValue().getValue(); }
+                            }
+                            else { income_sum += income.getValue().getValue(); }
                         }
                         HashMap<String, Expense> expenses = user.getExpenses();  // Show expenses as well.
                         for (Map.Entry<String, Expense> expense : expenses.entrySet()) {  // This is how we're going to iterate thru the user's hashpmap properties
-                            expense_sum += expense.getValue().getValue();
+                            if(expense.getValue().isRecurring()) {
+                                int e_month = Integer.parseInt(expense.getValue().getDate().substring(4, 6))-1;
+                                int e_day = Integer.parseInt(expense.getValue().getDate().substring(6, 8));
+                                int e_year = Integer.parseInt(expense.getValue().getDate().substring(0, 4));
+                                Calendar cal = new GregorianCalendar(e_year, e_month, e_day);
+                                int e_days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+                                if(expense.getValue().getRecurRate() == 1) { expense_sum += expense.getValue().getValue() * (e_days-e_day); }                       // Daily
+                                else if(expense.getValue().getRecurRate() == 2) { expense_sum += expense.getValue().getValue() * Math.floor((e_days-e_day)/7); }    // Weekly
+                                else if(expense.getValue().getRecurRate() == 3) { expense_sum += expense.getValue().getValue(); }                                   // Monthly
+                            }
+                            else { expense_sum += expense.getValue().getValue(); }
                         }
 
                         HashMap<String, Budget> budgets = user.getBudgets();

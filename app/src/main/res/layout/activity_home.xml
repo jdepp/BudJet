@@ -100,6 +100,19 @@
 
             </ScrollView>
 
+            <Button
+                android:id="@+id/view_suggestions"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="Suggestions"
+                android:layout_marginBottom="5dp"
+                android:onClick="viewSuggestions"
+                android:layout_marginTop="340dp"
+                android:background="#000000"
+                android:textColor="#ffffff"
+                android:textSize="10dp"
+                android:layout_marginRight="5dp"/>
         </RelativeLayout>
 
     </RelativeLayout>
